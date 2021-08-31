@@ -83,6 +83,7 @@ runs:
         mkdir "test_results"
         echo "the input for build options: ${{ inputs.build_options }}"
         echo "setting build options"
+        read -r -a BUILD_OPTIONS_CURR <<< '${{ inputs.build_options }}'
         BUILD_OPTIONS_CURR='${{ inputs.build_options }}'
         echo "finished setting build options"
         echo "BUILD_OPTIONS: " "${BUILD_OPTIONS_CURR}"
