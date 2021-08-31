@@ -81,7 +81,7 @@ runs:
         mkdir "test_results"
         echo "the input for build options: ${{ inputs.build_options }}"
         BUILD_OPTIONS_CURR=${{ inputs.build_options }}
-        echo "BUILD_OPTIONS: " "${BUILD_OPTIONS_CURR[@]}"
+        echo "BUILD_OPTIONS: " "${BUILD_OPTIONS_CURR}"
         OUT=`conda build --output ${{ inputs.recipe_path }}`
         echo "::set-output name=PACKAGE_PATH::$(echo $OUT)"
         echo ""
