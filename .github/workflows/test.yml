@@ -64,7 +64,7 @@ jobs:
       # Runs this action, skipping the build but running successfully
       - uses: ./
         with:
-          CONDA_BUILD_ENV_FILEPATH: "test_env/test_build.yml"
+          CONDA_BUILD_ENV_FILEPATH: 'test_env/test_build.yml'
           TEST_RESULTS_ARTIFACT_NAME: 'customized_test_results'
           PACKAGE_ARTIFACT_NAME: 'conda_package_customized_build'
       - uses: actions/download-artifact@v2
