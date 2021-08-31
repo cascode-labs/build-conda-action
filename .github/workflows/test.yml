@@ -54,3 +54,25 @@ jobs:
             echo "conda_package artifact was found even though it was not supposed to be created."
             exit 1
           fi
+
+  # Test customized build.yml file
+  customized-yml:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      # Runs this action, skipping the build but running successfully
+      - uses: ./
+        with:
+          CONDA_BUILD_ENV_FILEPATH: "test_env/test_build.yml"
+          TEST_RESULTS_ARTIFACT_NAME: 'customized_test_results'
+          PACKAGE_ARTIFACT_NAME: 'conda_package_customized_build'
+      - uses: actions/download-artifact@v2
+      - name: Check Artifacts
+        run: |
+          ls -al
+          if [ ! -e conda_package_customized_build ]; then
+            echo "conda_package artifact not found"
+            exit 1
+          fi
+          ls -al conda_package_customized_build

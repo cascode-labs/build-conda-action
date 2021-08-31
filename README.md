@@ -7,7 +7,30 @@ A Github Action for building an IDS conda package using
 self-hosted runners.  When it is run on a self-hosted runner, it builds with both the ids and dev channels included. 
 
 # Usage
-TODO: 
+
+> Inputs are **NOT** required when using this action. They all have basic defaults and are only there to allow for more customization.
+
+**Best Practices**
+- Place customized _build.yml_ file at 'envs/build.yml'
+- Need a "conda-recipe" package in the repository - or another package name that needs to be specified in the ${RECIPE_PATH} input section.
+
+**Example Usage**
+
+`job-name:` <br/>
+&ensp;&ensp;&ensp;`runs-on: ubuntu-latest`<br/>
+&ensp;&ensp;&ensp;`steps:`<br/>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`# Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it`<br/>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`- uses: actions/checkout@v2`<br/>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`# Runs the action with the following inputs or defaults if not specified.`<br/>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`- uses: cascode-labs/build-conda-action/action.yml@1`<br/>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`with:`<br/>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`RECIPE_PATH: '{NEW_RECIPE_PATH}'`<br/>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`BASE_ENV_PREFIX: '{NEW_BASE_PREFIX}'`<br/>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`PACKAGE_ARTIFACT_NAME: '{NEW_PACKAGE_NAME}'`<br/>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`TEST_RESULTS_ARTIFACT_NAME: '{NEW_TEST_RESULTS_NAME}'`<br/>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`BUILD_OPTIONS: '{NEW_CHANNELS_TO_USE}'`<br/>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`CONDA_BUILD_ENV_FILEPATH: '{NEW_BUILD_ENV_PATH}`<br/>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`- uses: actions/download-artifact@v2`
 
 # Inputs
 - **recipe_path**: The path to the recipe from the repo root.  Optional, default: 'conda-recipe'

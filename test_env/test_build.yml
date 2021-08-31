@@ -1,0 +1,10 @@
+name: test-ids-actions-build-conda-build
+# looks through these channels (locations) to find the following dependencies
+channels:
+  - defaults
+  - conda-forge
+# the required packages for the current project
+dependencies:
+  - conda=4.9.2
+  - conda-build=3.20.5
+  - conda-verify=3.4.2
