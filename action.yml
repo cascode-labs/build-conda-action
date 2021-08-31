@@ -84,18 +84,17 @@ runs:
         echo "the input for build options: ${{ inputs.build_options }}"
         echo "setting build options"
         read -r -a BUILD_OPTIONS_CURR <<< '${{ inputs.build_options }}'
-        BUILD_OPTIONS_CURR='${{ inputs.build_options }}'
         echo "finished setting build options"
-        echo "BUILD_OPTIONS: " "${BUILD_OPTIONS_CURR}"
+        echo "BUILD_OPTIONS: " "${BUILD_OPTIONS_CURR[@]}"
         OUT=`conda build --output ${{ inputs.recipe_path }}`
         echo "::set-output name=PACKAGE_PATH::$(echo $OUT)"
         echo ""
         echo "Package output path:"
         echo "  $OUT"
         echo ""
-        echo 'conda build "${BUILD_OPTIONS_CURR}" \
+        echo 'conda build "${BUILD_OPTIONS_CURR[@]}" \
                           ${{ inputs.recipe_path }}'
-        conda build "${BUILD_OPTIONS_CURR}" \
+        conda build "${BUILD_OPTIONS_CURR[@]}" \
                     ${{ inputs.recipe_path }}
       shell: bash -l {0}
     - uses: actions/upload-artifact@v2
