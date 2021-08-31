@@ -1,4 +1,4 @@
-name: ids-actions-build-conda-build
+name: build-conda-action-build
 # looks through these channels (locations) to find the following dependencies
 channels:
   - defaults

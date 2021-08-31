@@ -79,17 +79,17 @@ runs:
         echo "BUILD PACKAGE"
         echo "-------------"
         mkdir "test_results"
-        BUILD_OPTIONS=${{ inputs.build_options }}
-        echo "BUILD_OPTIONS: " "${BUILD_OPTIONS[@]}"
+        BUILD_OPTIONS_CURR=${{ inputs.build_options }}
+        echo "BUILD_OPTIONS: " "${BUILD_OPTIONS_CURR[@]}"
         OUT=`conda build --output ${{ inputs.recipe_path }}`
         echo "::set-output name=PACKAGE_PATH::$(echo $OUT)"
         echo ""
         echo "Package output path:"
         echo "  $OUT"
         echo ""
-        echo 'conda build "${BUILD_OPTIONS[@]}" \
+        echo 'conda build "${BUILD_OPTIONS_CURR[@]}" \
                           ${{ inputs.recipe_path }}'
-        conda build "${BUILD_OPTIONS[@]}" \
+        conda build "${BUILD_OPTIONS_CURR[@]}" \
                     ${{ inputs.recipe_path }}
       shell: bash -l {0}
     - uses: actions/upload-artifact@v2
