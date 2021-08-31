@@ -63,6 +63,8 @@ runs:
 
         echo ""
         echo "SETUP BUILD ENV"
+        echo "Set source"
+        source ${{ inputs.base_env_prefix }}/etc/profile.d/conda.sh
         echo "-----------------"
         echo "Setting up ${{ github.event.repository.name }}-build environment"
         conda env update --name ${{ github.event.repository.name }}-build \
