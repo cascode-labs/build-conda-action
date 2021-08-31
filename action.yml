@@ -1,0 +1,102 @@
+name: 'Build Conda'
+description: 'Builds an IDS Conda package'
+inputs:
+  recipe_path: # id of input
+    description: 'The path to the recipe from the repo root'
+    required: false
+    default: 'conda-recipe'
+  base_env_prefix:  # id of input
+    description: 'The prefix of the base Conda environment'
+    required: false
+    default: '/usr/share/miniconda'
+  package_artifact_name:
+    description: 'Name of the package artifact'
+    required: false
+    default: 'conda_package'
+  test_results_artifact_name:
+    description: 'Name of the test results artifact'
+    required: false
+    default: 'test_results'
+  build_options:
+    description: 'Options to be passed to conda-build'
+    required: false
+    default: '-c defaults -c conda-forge'
+  conda_build_env_filepath:
+    description: 'Yml Conda build environment definition file'
+    required: false
+    default: 'envs/build.yml'
+outputs:
+  package-filepath:
+    description: "The file path of the generated package"
+    value: ${{ steps.build-package.outputs.PACKAGE_PATH }}
+runs:
+  using: "composite"
+  steps:
+    - id: build-package
+      run: |
+        echo "::set-output name=PACKAGE_PATH::$(echo "None")"
+        echo "CHECKS"
+        echo "------"
+        echo "Checking for the Conda recipe"
+        if [ -d ${{ inputs.recipe_path }} ]; then
+          RECIPE="True"
+          echo "Building the conda recipe at ${{ inputs.recipe_path }}"
+        else
+          RECIPE="False"
+          echo "Unable to locate the conda recipe at ${{ inputs.recipe_path }}. Skipping the build of the conda package."
+          exit 0
+        fi
+        if [ ! -f ${{ inputs.conda_build_env_filepath }} ]; then
+          echo "  Unable to locate ${{ inputs.conda_build_env_filepath }}"
+          echo "  Skipping the build of the conda package."
+          exit 0
+        fi
+        if ! command -v conda &> /dev/null; then
+          echo "Conda is not setup.  Attempting to set it up."
+          echo 'source ${{ inputs.base_env_prefix }}/etc/profile.d/conda.sh'
+          source ${{ inputs.base_env_prefix }}/etc/profile.d/conda.sh
+          if ! command -v conda &> /dev/null; then
+            echo "ERROR: Failed to setup setup Conda"
+            exit 1
+          fi
+        fi
+
+        echo ""
+        echo "SETUP BUILD ENV"
+        echo "-----------------"
+        echo "Setting up ${{ github.event.repository.name }}-build environment"
+        conda env update --name ${{ github.event.repository.name }}-build \
+                         --file ${{ inputs.conda_build_env_filepath }}  || \
+          conda env create -f envs/build.yml
+        conda activate ${{ github.event.repository.name }}-build
+        echo "conda info"
+        conda info
+        echo ""
+        echo "conda list"
+        conda list
+
+        echo ""
+        echo "BUILD PACKAGE"
+        echo "-------------"
+        mkdir "test_results"
+        BUILD_OPTIONS=${{ inputs.build_options }}
+        echo "BUILD_OPTIONS: " "${BUILD_OPTIONS[@]}"
+        OUT=`conda build --output ${{ inputs.recipe_path }}`
+        echo "::set-output name=PACKAGE_PATH::$(echo $OUT)"
+        echo ""
+        echo "Package output path:"
+        echo "  $OUT"
+        echo ""
+        echo 'conda build "${BUILD_OPTIONS[@]}" \
+                          ${{ inputs.recipe_path }}'
+        conda build "${BUILD_OPTIONS[@]}" \
+                    ${{ inputs.recipe_path }}
+      shell: bash -l {0}
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.package_artifact_name }}
+        path: ${{ steps.build-package.outputs.PACKAGE_PATH }}
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.test_results_artifact_name }}
+        path: test_results

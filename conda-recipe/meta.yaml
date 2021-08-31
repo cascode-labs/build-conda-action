@@ -1,0 +1,31 @@
+{% set name = "example" %}
+  {% set version = "0.1.0" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  - path: ../conda-recipe
+    folder: conda-recipe
+  - path: ../example
+    folder: example
+  - path: ../setup.py
+
+build:
+  preserve_egg_dir: False
+  script: python -m pip install --no-deps --ignore-installed .
+
+requirements:
+  build:
+    - python {{ python }}
+    - setuptools
+
+test:
+  imports:
+    - example
+
+about:
+  home: https://github.com/cascode-labs/build-conda-action
+  license: MIT
+  summary: An example recipe for testing the action
