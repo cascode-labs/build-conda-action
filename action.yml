@@ -88,9 +88,9 @@ runs:
         echo "Package output path:"
         echo "  $OUT"
         echo ""
-        echo 'conda build "${BUILD_OPTIONS_CURR[@]}" \
+        echo 'conda build "${BUILD_OPTIONS_CURR}" \
                           ${{ inputs.recipe_path }}'
-        conda build "${BUILD_OPTIONS_CURR[@]}" \
+        conda build "${BUILD_OPTIONS_CURR}" \
                     ${{ inputs.recipe_path }}
       shell: bash -l {0}
     - uses: actions/upload-artifact@v2
