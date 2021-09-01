@@ -118,3 +118,6 @@ runs:
       with:
         name: ${{ inputs.test_results_artifact_name }}
         path: test_results
+branding:
+  icon: 'package'
+  color: 'green'
