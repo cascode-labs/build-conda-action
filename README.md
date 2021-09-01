@@ -55,7 +55,7 @@ job-name:
   steps:
     - uses: actions/checkout@v2
     # Builds the package using the standard configuration
-    - uses: cascode-labs/build-conda-action/action.yml@v1
+    - uses: cascode-labs/build-conda-action/action.yml@v0
 ```
 
 
@@ -109,7 +109,7 @@ job-name:
       with:
         python-version: 3.7
     # Runs the action with the following inputs or defaults if not specified.
-    - uses: cascode-labs/build-conda-action/action.yml@1
+    - uses: cascode-labs/build-conda-action/action.yml@v0
       with:
         RECIPE_PATH: '{NEW_RECIPE_PATH}'
         BASE_ENV_PREFIX: '{NEW_BASE_PREFIX}'
@@ -122,8 +122,10 @@ job-name:
 ## Roadmap
 
 See the 
-[open issues](https://github.com/cascode-labs/build-conda-action/issues) 
+[open issues](https://github.com/cascode-labs/build-conda-action/issues)
 for a list of proposed features (and known issues).
+[Milestones](https://github.com/cascode-labs/build-conda-action/milestones)
+outline the release version of each issue.
 
 ## Contributing
 
