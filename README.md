@@ -2,8 +2,6 @@
 [![Test](https://github.com/cascode-labs/build-conda-action/actions/workflows/test.yml/badge.svg)](https://github.com/cascode-labs/build-conda-action/actions/workflows/test.yml)
 ![v0.1.0](https://img.shields.io/badge/v-0.1.0-blue)
 
-# build-conda-action
-
 <br />
 <p align="center">
   <a href="https://github.com/cascode-labs/build-conda-action">
@@ -13,16 +11,14 @@
   <h1 align="center">build-conda-action</h1>
 
   <p align="center">
-    project_description
-    <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    A GitHub action that builds a Conda recipe
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://github.com/github_username/repo_name">Action Marketplace</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/cascode-labs/conda-build-action/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/cascode-labs/conda-build-action/issues">Request Feature</a>
   </p>
 </p>
 
@@ -33,27 +29,7 @@ It is meant to be simple to use with reasonable defaults that should work
 without any inputs when your project Conda configuration is setup according to 
 the guidelines. However it also supports powerful customization of the conda 
 build configuration through the inputs. It supports both GitHub hosted and 
-self-hosted runners by setting the "base_env_prefix" input.  
-
-
-<!-- TABLE OF CONTENTS -->
-<details open="open">
-  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
-  <ol>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#standard-conda-configuration-for-basic-operation">Standard Conda Configuration</a></li>
-        <li><a href="#basic-usage">Basic Usage</a></li>
-      </ul>
-    </li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
-  </ol>
-</details>
-
+self-hosted runners by setting the "base_env_prefix" input.
 
 ## Getting Started
 
