@@ -1,54 +1,166 @@
-# build-conda-action
-[![Test](https://github.com/skyworksinc/ids-actions-build-conda/actions/workflows/test.yml/badge.svg)](https://github.com/skyworksinc/ids-actions-build-conda/actions/workflows/test.yml)
+
+[![Test](https://github.com/cascode-labs/build-conda-action/actions/workflows/test.yml/badge.svg)](https://github.com/cascode-labs/build-conda-action/actions/workflows/test.yml)
 ![v0.1.0](https://img.shields.io/badge/v-0.1.0-blue)
 
-A Github Action for building an IDS conda package using 
-[conda-build](https://docs.conda.io/projects/conda-build/en/latest/index.html).  It supports both GitHub hosted and 
-self-hosted runners.  When it is run on a self-hosted runner, it builds with both the ids and dev channels included. 
+# build-conda-action
 
-# Usage
+<br />
+<p align="center">
+  <a href="https://github.com/cascode-labs/build-conda-action">
+    <img src="images/conda_logo.png" alt="Conda Logo">
+  </a>
 
-> Inputs are **NOT** required when using this action. They all have basic defaults and are only there to allow for more customization.
+  <h1 align="center">build-conda-action</h1>
 
-**Best Practices**
-- Place customized _build.yml_ file at 'envs/build.yml'
-- Need a "conda-recipe" package in the repository - or another package name that needs to be specified in the ${RECIPE_PATH} input section.
+  <p align="center">
+    project_description
+    <br />
+    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    ·
+    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+  </p>
+</p>
 
-**Example Usage**
+A Github Action for building a [Conda](https://docs.conda.io/en/latest/) 
+package strored in the project using 
+[conda-build](https://docs.conda.io/projects/conda-build/en/latest/index.html).
+It is meant to be simple to use with reasonable defaults that should work 
+without any inputs when your project Conda configuration is setup according to 
+the guidelines. However it also supports powerful customization of the conda 
+build configuration through the inputs. It supports both GitHub hosted and 
+self-hosted runners by setting the "base_env_prefix" input.  
 
-`job-name:` <br/>
-&ensp;&ensp;&ensp;`runs-on: ubuntu-latest`<br/>
-&ensp;&ensp;&ensp;`steps:`<br/>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`# Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it`<br/>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`- uses: actions/checkout@v2`<br/>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`# Runs the action with the following inputs or defaults if not specified.`<br/>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`- uses: cascode-labs/build-conda-action/action.yml@1`<br/>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`with:`<br/>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`RECIPE_PATH: '{NEW_RECIPE_PATH}'`<br/>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`BASE_ENV_PREFIX: '{NEW_BASE_PREFIX}'`<br/>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`PACKAGE_ARTIFACT_NAME: '{NEW_PACKAGE_NAME}'`<br/>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`TEST_RESULTS_ARTIFACT_NAME: '{NEW_TEST_RESULTS_NAME}'`<br/>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`BUILD_OPTIONS: '{NEW_CHANNELS_TO_USE}'`<br/>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`CONDA_BUILD_ENV_FILEPATH: '{NEW_BUILD_ENV_PATH}`<br/>
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`- uses: actions/download-artifact@v2`
 
-# Inputs
-- **recipe_path**: The path to the recipe from the repo root.  Optional, default: 'conda-recipe'
-- **base_env_prefix**:  The prefix of the base Conda environment.  Optional, default: '/prj/ids/ids-conda/envs/anaconda'
-- **package_artifact_name**:  The display name of the uploaded package artifact.  Optional, default: 'conda_package'
-- **test_results_artifact_name**:  The display name of the uploaded test results artifact.  Optional, default: 'test_results'
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <ol>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#standard-conda-configuration-for-basic-operation">Standard Conda Configuration</a></li>
+        <li><a href="#basic-usage">Basic Usage</a></li>
+      </ul>
+    </li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
+  </ol>
+</details>
 
-# Outputs:
-- **package-filepath**: The file path of the generated package.  It will return "None" if no package was created.
 
-# Project Requirements
-The Conda recipe's tests should copy their results, including any test or lint reports to the "test_results" folder.
-Then the folder will be uploaded as an artifact.
+## Getting Started
 
-The project also needs to have a build environment definition file at "envs/build.yml".  This should include all the 
-packages required to build the package.
+> All inputs are optional. Just Follow the project configuration guidelines 
+> below
 
-# Contributing
+### Standard Conda Configuration for Basic Operation
+- Name the conda recipe folder "conda-recipe"
+- Place any test result, lint, or other build outputs you'd like uploaded as 
+  artifacts in a "test_results" folder
+- The build environment will contain Conda, Conda-build, and Conda-verify by
+  default.  
+  > The build environment can be customized using the 
+  > _conda_build_env_filepath_ input.  Include just the packages needed to 
+  > **build** the package.  Packages required to test or run the project are 
+  > specified in the recipe's meta.yml.
+  
+### Basic Usage
 
-## Testing
-This repo contains a test workflow with each job of the workflow as a different test case.
+```yaml
+job-name:
+  runs-on: 'ubuntu-latest'
+  steps:
+    - uses: actions/checkout@v2
+    # Builds the package using the standard configuration
+    - uses: cascode-labs/build-conda-action/action.yml@v1
+```
+
+
+
+## Custom Configuration
+
+### Inputs
+- **recipe_path**: The path to the Conda recipe from the repo root.  
+  Default: 'conda-recipe' 
+- **conda_build_env_filepath**: Path to a custom build 
+  [yml env definition file](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#create-env-file-manually)
+  > Best Practice: If you need to customize the build environment, place a
+  > customized _build.yml_ file at 'envs/build.yml'
+- **base_env_prefix**:  The prefix of the base Conda environment.  
+  Default: '/usr/share/miniconda'
+  > Use this input for initializing the base environment of a self-hosted 
+  > runner by providing the base environment prefix of the runner
+- **package_artifact_name**:  The display name of the uploaded package 
+  artifact.  
+  Default: 'conda_package'
+- **test_results_artifact_name**:  The display name of the uploaded test 
+  results artifact.  
+  Default: 'test_results'
+- **build_options**: Options to be passed to conda-build to customize the build
+  configuration.  For example, you can provide a different set of channels.  
+  Default: '-c defaults -c conda-forge'
+  
+### Outputs:
+- **package-filepath**: The file path of the generated package.  It will 
+  return "None" if no package was created.
+  > The folder "built_package_outputs" is reserved for the build process.
+  > It is used to assemble the package to be uploaded as artifacts
+
+### Artifacts Uploaded
+
+The following are uploaded to the run as artifacts.
+
+- **Conda packages**: The built Conda packages
+- **Test Results**:  Any additional testing or build artifacts that are copied
+  into the _test_results_ folder.  Examples include test results, test reports, 
+  lint reports or coverage reports.
+
+### Example customized workflow
+```yaml
+job-name:
+  runs-on: 'ubuntu-latest'
+  steps:
+    - uses: actions/checkout@v2
+    # Initializes Conda on a GitHub hosted Runner
+    - uses: conda-incubator/setup-miniconda@v2
+      with:
+        python-version: 3.7
+    # Runs the action with the following inputs or defaults if not specified.
+    - uses: cascode-labs/build-conda-action/action.yml@1
+      with:
+        RECIPE_PATH: '{NEW_RECIPE_PATH}'
+        BASE_ENV_PREFIX: '{NEW_BASE_PREFIX}'
+        PACKAGE_ARTIFACT_NAME: '{NEW_PACKAGE_NAME}'
+        TEST_RESULTS_ARTIFACT_NAME: '{NEW_TEST_RESULTS_NAME}'
+        BUILD_OPTIONS: '{NEW_CHANNELS_TO_USE}'
+        CONDA_BUILD_ENV_FILEPATH: '{NEW_BUILD_ENV_PATH}'
+```
+
+## Roadmap
+
+See the 
+[open issues](https://github.com/cascode-labs/build-conda-action/issues) 
+for a list of proposed features (and known issues).
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to 
+learn, inspire, and create. Any contributions you make are 
+**greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Testing
+This repo contains a test workflow with each job of the workflow as a different
+test case.
