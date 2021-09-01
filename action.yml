@@ -1,5 +1,5 @@
 name: 'Build Conda'
-description: 'Builds an IDS Conda package'
+description: 'Builds a Conda package'
 inputs:
   recipe_path: # id of input
     description: 'The path to the recipe from the repo root'
