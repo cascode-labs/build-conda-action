@@ -14,7 +14,7 @@
     A GitHub action that builds a Conda recipe
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">Action Marketplace</a>
+    <a href="https://github.com/marketplace/actions/build-conda">Action Marketplace</a>
     ·
     <a href="https://github.com/cascode-labs/conda-build-action/issues">Report Bug</a>
     ·
