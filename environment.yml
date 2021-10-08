@@ -1,0 +1,11 @@
+name: build-conda-action
+# looks through these channels (locations) to find the following dependencies
+channels:
+  - defaults
+  - conda-forge
+# the required packages for the current project
+dependencies:
+  - conda
+  - conda-build
+  - conda-verify
+  - fabric
