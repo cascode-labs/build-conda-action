@@ -9,3 +9,5 @@ dependencies:
   - conda-build
   - conda-verify
   - fabric
+  - pytest
+  - coverage

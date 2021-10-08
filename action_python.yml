@@ -46,20 +46,6 @@ runs:
           exit 0
         fi
 
-        echo ""
-        echo "Selecting Build Env yml File"
-        if [ ${{ inputs.conda_build_env_filepath }} = 'action_default' ]; then
-          echo "Using the default conda configuration"
-          CONDA_BUILD_ENV_FILE="${{ github.action_path }}/envs/build.yml"
-        elif [ -f ${{ inputs.conda_build_env_filepath }} ]; then
-          CONDA_BUILD_ENV_FILE=${{ inputs.conda_build_env_filepath }}
-        else
-          echo "Using the default conda configuration"
-          CONDA_BUILD_ENV_FILE="${{ github.action_path }}/envs/build.yml"
-        fi
-        echo "CONDA_BUILD_ENV_FILE: ${CONDA_BUILD_ENV_FILE=}"
-        cat "${CONDA_BUILD_ENV_FILE}"
-
         echo "Checking that Conda is Initialized"
         if ! command -v conda &> /dev/null; then
           echo "Conda is not setup.  Attempting to set it up."
@@ -71,6 +57,9 @@ runs:
           fi
         fi
         echo "  Conda is initialized"
+
+        echo ""
+        echo "Selecting Build Env yml File"
 
         echo ""
         echo "SETUP BUILD ENV"
