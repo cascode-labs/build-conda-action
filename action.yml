@@ -113,7 +113,7 @@ runs:
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.package_artifact_name }}
-        path: built_package_outputs
+        path: ${{runner.temp}}/package_outputs
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.test_results_artifact_name }}
