@@ -1,5 +1,5 @@
 {% set name = "example" %}
-  {% set version = "0.1.0" %}
+{% set version = "0.1.0" %}
 
 package:
   name: "{{ name|lower }}"
@@ -22,6 +22,8 @@ requirements:
     - setuptools
 
 test:
+  source_files:
+    - example
   imports:
     - example
 
