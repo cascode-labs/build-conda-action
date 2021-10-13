@@ -22,8 +22,8 @@ requirements:
     - setuptools
 
 test:
-  source_files:
-    - example
+  #source_files:
+  #  - example
   imports:
     - example
 
