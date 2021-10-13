@@ -12,6 +12,7 @@ source:
     folder: example
   - path: ../setup.py
   - path: ../setup.cfg
+  - path: ../version
 build:
   preserve_egg_dir: False
   script: python -m pip install --no-deps .
