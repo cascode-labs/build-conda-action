@@ -82,11 +82,11 @@ runs:
         echo "Set source"
         source ${{ inputs.base_env_prefix }}/etc/profile.d/conda.sh
         echo "-----------------"
-        echo "Setting up ${{ github.event.repository.name }}-build environment"
+        echo "Setting up ${BUILD_ENV_NAME} environment"
         conda env update --name ${BUILD_ENV_NAME} \
                          --file "${CONDA_BUILD_ENV_FILE}"  || \
             conda env create -f "${CONDA_BUILD_ENV_FILE}"
-        conda activate ${{ github.event.repository.name }}-build
+        conda activate ${BUILD_ENV_NAME}
         echo "conda info"
         conda info
         echo ""
