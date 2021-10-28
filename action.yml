@@ -51,14 +51,19 @@ runs:
         if [ ${{ inputs.conda_build_env_filepath }} = 'action_default' ]; then
           echo "Using the default conda configuration"
           CONDA_BUILD_ENV_FILE="${{ github.action_path }}/envs/build.yml"
+          BUILD_ENV_NAME="build-conda-action"
         elif [ -f ${{ inputs.conda_build_env_filepath }} ]; then
           CONDA_BUILD_ENV_FILE=${{ inputs.conda_build_env_filepath }}
+          BUILD_ENV_NAME="${{ github.event.repository.name }}-build"
         else
           echo "Using the default conda configuration"
           CONDA_BUILD_ENV_FILE="${{ github.action_path }}/envs/build.yml"
+          BUILD_ENV_NAME="build-conda-action"
         fi
-        echo "CONDA_BUILD_ENV_FILE: ${CONDA_BUILD_ENV_FILE=}"
+        echo "BUILD_ENV_NAME: ${BUILD_ENV_NAME}"
+        echo "CONDA_BUILD_ENV_FILE: ${CONDA_BUILD_ENV_FILE} ="
         cat "${CONDA_BUILD_ENV_FILE}"
+
 
         echo "Checking that Conda is Initialized"
         if ! command -v conda &> /dev/null; then
@@ -78,7 +83,7 @@ runs:
         source ${{ inputs.base_env_prefix }}/etc/profile.d/conda.sh
         echo "-----------------"
         echo "Setting up ${{ github.event.repository.name }}-build environment"
-        conda env update --name ${{ github.event.repository.name }}-build \
+        conda env update --name ${BUILD_ENV_NAME} \
                          --file "${CONDA_BUILD_ENV_FILE}"  || \
             conda env create -f "${CONDA_BUILD_ENV_FILE}"
         conda activate ${{ github.event.repository.name }}-build
@@ -97,7 +102,7 @@ runs:
         read -r -a BUILD_OPTIONS <<< '${{ inputs.build_options }}'
         echo "finished setting build options"
         echo "BUILD_OPTIONS: " "${BUILD_OPTIONS[@]}"
-        OUT=`conda build --output ${{ inputs.recipe_path }}`
+        OUT=`conda build --output "${BUILD_OPTIONS[@]}" ${{ inputs.recipe_path }}`
         echo "::set-output name=PACKAGE_PATH::$(echo $OUT)"
         echo ""
         echo "Package output path:"
