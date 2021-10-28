@@ -38,7 +38,7 @@ runs:
         ${{ inputs.recipe_path }} \
         ${{ inputs.conda_build_env_filepath }} \
         ${{ inputs.base_env_prefix }} \
-        '${{ inputs.build_options }}'\
+        '${{ inputs.build_options }}' \
         ${{ github.action_path }} \
         ${{ github.event.repository.name }}
       shell: bash -l {0}
