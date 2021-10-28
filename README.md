@@ -1,6 +1,6 @@
 
 [![Test](https://github.com/cascode-labs/build-conda-action/actions/workflows/test.yml/badge.svg)](https://github.com/cascode-labs/build-conda-action/actions/workflows/test.yml)
-![v0.1.0](https://img.shields.io/badge/v-0.1.0-blue)
+![v0.1.2](https://img.shields.io/badge/v-0.1.0-blue)
 
 <br />
 <p align="center">
