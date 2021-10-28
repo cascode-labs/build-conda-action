@@ -6,6 +6,7 @@ base_env_prefix=$3
 build_options=$4
 action_path=$5
 repository_name=$6
+runner_temp=$7
 echo "recipe_path: ${recipe_path}"
 echo "conda_build_env_filepath: ${conda_build_env_filepath}"
 echo "base_env_prefix: ${base_env_prefix}"
@@ -88,5 +89,5 @@ echo "  $OUT"
 echo ""
 echo "conda build " "${BUILD_OPTIONS[@]}" "${recipe_path}"
 conda build "${BUILD_OPTIONS[@]}" "${recipe_path}"
-mkdir "${{runner.temp}/package_outputs"
-cp -f "$OUT" "${{runner.temp}/package_outputs"
+mkdir "${runner_temp}/package_outputs"
+cp -f "$OUT" "${runner_temp}/package_outputs"

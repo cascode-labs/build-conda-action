@@ -40,7 +40,8 @@ runs:
         ${{ inputs.base_env_prefix }} \
         '${{ inputs.build_options }}' \
         ${{ github.action_path }} \
-        ${{ github.event.repository.name }}
+        ${{ github.event.repository.name }} \
+        ${{ runner.temp }}
       shell: bash -l {0}
     - uses: actions/upload-artifact@v2
       with:
