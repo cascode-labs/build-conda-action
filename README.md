@@ -111,12 +111,12 @@ job-name:
     # Runs the action with the following inputs or defaults if not specified.
     - uses: cascode-labs/build-conda-action/action.yml@v0
       with:
-        RECIPE_PATH: '{NEW_RECIPE_PATH}'
-        BASE_ENV_PREFIX: '{NEW_BASE_PREFIX}'
-        PACKAGE_ARTIFACT_NAME: '{NEW_PACKAGE_NAME}'
-        TEST_RESULTS_ARTIFACT_NAME: '{NEW_TEST_RESULTS_NAME}'
-        BUILD_OPTIONS: '{NEW_CHANNELS_TO_USE}'
-        CONDA_BUILD_ENV_FILEPATH: '{NEW_BUILD_ENV_PATH}'
+        recipe_path: '{NEW_RECIPE_PATH}'
+        base_env_prefix: '{NEW_BASE_PREFIX}'
+        package_artifact_name: '{NEW_PACKAGE_NAME}'
+        test_results_artifact_name: '{NEW_TEST_RESULTS_NAME}'
+        build_options: '{NEW_CHANNELS_TO_USE}'
+        conda_build_env_filepath: '{NEW_BUILD_ENV_PATH}'
 ```
 
 ## Roadmap
