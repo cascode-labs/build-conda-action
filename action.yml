@@ -34,7 +34,7 @@ runs:
   steps:
     - id: build-package
       run: |
-        ./${{ github.action_path }}/build.sh \
+        ${{ github.action_path }}/build.sh \
         ${{ inputs.recipe_path }} \
         ${{ inputs.conda_build_env_filepath }} \
         ${{ inputs.base_env_prefix }} \
