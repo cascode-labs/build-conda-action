@@ -50,7 +50,7 @@ runs:
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.test_results_artifact_name }}
-        path: test_results
+        path: ${{GITHUB_WORKSPACE}}/test_results
 branding:
   icon: 'package'
   color: 'green'
