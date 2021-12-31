@@ -1,6 +1,6 @@
 
 [![Test](https://github.com/cascode-labs/build-conda-action/actions/workflows/test.yml/badge.svg)](https://github.com/cascode-labs/build-conda-action/actions/workflows/test.yml)
-![v0.1.2](https://img.shields.io/badge/v-0.1.0-blue)
+![v0.1.4](https://img.shields.io/badge/v-0.1.4-blue)
 
 <br />
 <p align="center">
@@ -37,6 +37,7 @@ self-hosted runners by setting the "base_env_prefix" input.
 > below
 
 ### Standard Conda Configuration for Basic Operation
+
 - Name the conda recipe folder "conda-recipe"
 - Place any test result, lint, or other build outputs you'd like uploaded as 
   artifacts in a "test_results" folder
@@ -58,11 +59,10 @@ job-name:
     - uses: cascode-labs/build-conda-action/action.yml@v0
 ```
 
-
-
 ## Custom Configuration
 
 ### Inputs
+
 - **recipe_path**: The path to the Conda recipe from the repo root.  
   Default: 'conda-recipe' 
 - **conda_build_env_filepath**: Path to a custom build 
@@ -83,7 +83,8 @@ job-name:
   configuration.  For example, you can provide a different set of channels.  
   Default: '-c defaults -c conda-forge'
   
-### Outputs:
+### Outputs
+
 - **package-filepath**: The file path of the generated package.  It will 
   return "None" if no package was created.
   > The folder "built_package_outputs" is reserved for the build process.
@@ -99,6 +100,7 @@ The following are uploaded to the run as artifacts.
   lint reports or coverage reports.
 
 ### Example customized workflow
+
 ```yaml
 job-name:
   runs-on: 'ubuntu-latest'
@@ -140,5 +142,6 @@ learn, inspire, and create. Any contributions you make are
 5. Open a Pull Request
 
 ### Testing
+
 This repo contains a test workflow with each job of the workflow as a different
 test case.
