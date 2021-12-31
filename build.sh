@@ -2,11 +2,12 @@
 
 recipe_path=$1
 conda_build_env_filepath=$2
-base_env_prefix=$3
-build_options=$4
-action_path=$5
-repository_name=$6
-runner_temp=$7
+conda_build_env_name=$3
+base_env_prefix=$4
+build_options=$5
+action_path=$6
+repository_name=$7
+runner_temp=$8
 echo "recipe_path: ${recipe_path}"
 echo "conda_build_env_filepath: ${conda_build_env_filepath}"
 echo "base_env_prefix: ${base_env_prefix}"
@@ -21,24 +22,30 @@ echo "Checking for the Conda recipe"
 if [ -d "${recipe_path}" ]; then
   echo "Building the conda recipe at ${recipe_path}"
 else
-  echo "Unable to locate the conda recipe at ${recipe_path}.
-  Skipping the build of the conda package."
-  exit 0
+  echo "ERROR: Unable to locate the conda recipe at ${recipe_path}."
+  exit 1
 fi
 
 echo ""
-echo "Selecting Build Env yml File"
+echo "Selecting Build Env yml File and Name"
 if [ "${conda_build_env_filepath}" = 'action_default' ]; then
-  echo "Using the default conda configuration"
+  echo "Using the default conda env yml file"
   CONDA_BUILD_ENV_FILE="${action_path}/envs/build.yml"
-  BUILD_ENV_NAME="build-conda-action"
-elif [ -f "${conda_build_env_filepath}" ]; then
+elif [ ! -f "${conda_build_env_filepath}" ]; then
+  echo "ERROR: Unable to locate the conda env yml file \
+        at ${conda_build_env_filepath}."
+  exit 1
+else
+  echo "Using the supplied conda env yml file"
   CONDA_BUILD_ENV_FILE=${conda_build_env_filepath}
+fi
+if [ "${conda_build_env_name}" = 'action_default' ] && \
+   [ "${conda_build_env_filepath}" = 'action_default' ]; then
+  BUILD_ENV_NAME="build-conda-action"
+elif [ "${conda_build_env_name}" = 'action_default' ]; then
   BUILD_ENV_NAME="${repository_name}-build"
 else
-  echo "Using the default conda configuration"
-  CONDA_BUILD_ENV_FILE="${action_path}/envs/build.yml"
-  BUILD_ENV_NAME="build-conda-action"
+  BUILD_ENV_NAME="${conda_build_env_name}"
 fi
 echo "BUILD_ENV_NAME: ${BUILD_ENV_NAME}"
 echo "CONDA_BUILD_ENV_FILE: ${CONDA_BUILD_ENV_FILE} ="
@@ -62,10 +69,11 @@ echo "SETUP BUILD ENV"
 echo "Set source"
 echo "-----------------"
 echo "Setting up ${BUILD_ENV_NAME} environment"
-conda env update --name ${BUILD_ENV_NAME} \
-                  --file "${CONDA_BUILD_ENV_FILE}"  || \
-    conda env create -f "${CONDA_BUILD_ENV_FILE}"
-conda activate ${BUILD_ENV_NAME}
+conda env update --name "${BUILD_ENV_NAME}" \
+                 --file "${CONDA_BUILD_ENV_FILE}"  || \
+    conda env create --name "${BUILD_ENV_NAME}" \
+                     --file "${CONDA_BUILD_ENV_FILE}"
+conda activate "${BUILD_ENV_NAME}"
 echo "conda info"
 conda info
 echo ""

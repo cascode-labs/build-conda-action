@@ -6,7 +6,11 @@ inputs:
     required: false
     default: 'conda-recipe'
   conda_build_env_filepath:
-    description: 'Yml Conda build environment definition file'
+    description: 'Yaml Conda build environment definition file'
+    required: false
+    default: 'action_default'
+  conda_build_env_name:
+    description: 'Conda build environment name'
     required: false
     default: 'action_default'
   base_env_prefix:  # id of input
@@ -37,6 +41,7 @@ runs:
         ${{ github.action_path }}/build.sh \
         ${{ inputs.recipe_path }} \
         ${{ inputs.conda_build_env_filepath }} \
+        ${{ inputs.conda_build_env_name }} \
         ${{ inputs.base_env_prefix }} \
         '${{ inputs.build_options }}' \
         ${{ github.action_path }} \
