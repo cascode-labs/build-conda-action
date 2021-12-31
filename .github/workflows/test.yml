@@ -30,29 +30,28 @@ jobs:
           fi
           ls -al conda_package
 
-  # Test skipping a build
-  skipped-build:
-    # The type of runner that the job will run on
+  # Test a failed build
+  fail-missing-conda-recipe:
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    continue-on-error: true
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       # Deletes the recipe
       - run: rm -rf "conda-recipe"
-      # Runs this action, skipping the build but running successfully
+      # Runs this action, failing
       - uses: ./
         with:
-          PACKAGE_ARTIFACT_NAME: 'conda_package_skipped'
-          TEST_RESULTS_ARTIFACT_NAME: 'test_results_skipped'
+          PACKAGE_ARTIFACT_NAME: 'conda_package_failed'
+          TEST_RESULTS_ARTIFACT_NAME: 'test_results_failed'
       # Check that the package was not uploaded as an artifact
       - uses: actions/download-artifact@v2
       - name: Check Artifacts
         run: |
           ls -al
-          if [ -e conda_package ]; then
+          if [ -e 'conda_package_failed' ]; then
             ls -al conda_package
-            echo "conda_package artifact was found even though it was not supposed to be created."
+            echo "conda_package artifact was found even though it \
+                  was not supposed to be created."
             exit 1
           fi
 
@@ -60,9 +59,8 @@ jobs:
   customized-yml:
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      # Runs this action, skipping the build but running successfully
+      # Runs this action
       - uses: ./
         with:
           CONDA_BUILD_ENV_FILEPATH: 'test_env/test_build.yml'
