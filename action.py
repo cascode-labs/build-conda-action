@@ -5,6 +5,8 @@ from conda_api import info
 from json import JSONDecoder
 from typing import Union
 
+PathLike = Union[str, Path]
+
 def check_conda_recipe(recipe_path: PathLike) -> None:
     recipe_path = Path(recipe_path)
     if recipe_path.exists():
