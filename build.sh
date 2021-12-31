@@ -15,6 +15,8 @@ echo "build_options: ${build_options}"
 echo "action_path: ${action_path}"
 echo "repository_name: ${repository_name}"
 
+echo '$CONDA=' "${CONDA}"
+
 echo "::set-output name=PACKAGE_PATH::$(echo "None")"
 echo "CHECKS"
 echo "------"
@@ -73,6 +75,7 @@ conda env update --name "${BUILD_ENV_NAME}" \
                  --file "${CONDA_BUILD_ENV_FILE}"  || \
     conda env create --name "${BUILD_ENV_NAME}" \
                      --file "${CONDA_BUILD_ENV_FILE}"
+source "${CONDA}/etc/profile.d/conda.sh"
 conda activate "${BUILD_ENV_NAME}"
 echo "conda info"
 conda info
