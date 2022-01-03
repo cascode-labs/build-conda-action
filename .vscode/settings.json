@@ -1,0 +1,5 @@
+{
+    "terminal.integrated.env.linux": {
+        "IDS_ROOT_ANACONDA": "/prj/ids_dev/work_libs/${env:USER}/envs/miniconda3"
+    }
+}

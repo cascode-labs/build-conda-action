@@ -75,7 +75,6 @@ conda env update --name "${BUILD_ENV_NAME}" \
                  --file "${CONDA_BUILD_ENV_FILE}"  || \
     conda env create --name "${BUILD_ENV_NAME}" \
                      --file "${CONDA_BUILD_ENV_FILE}"
-source "${CONDA}/etc/profile.d/conda.sh"
 conda activate "${BUILD_ENV_NAME}"
 echo "conda info"
 conda info
