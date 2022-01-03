@@ -53,16 +53,12 @@ echo "BUILD_ENV_NAME: ${BUILD_ENV_NAME}"
 echo "CONDA_BUILD_ENV_FILE: ${CONDA_BUILD_ENV_FILE} ="
 cat "${CONDA_BUILD_ENV_FILE}"
 
-
+echo "source ${base_env_prefix}/etc/profile.d/conda.sh"
+source "${base_env_prefix}/etc/profile.d/conda.sh"
 echo "Checking that Conda is Initialized"
 if ! command -v conda &> /dev/null; then
-  echo "Conda is not setup.  Attempting to set it up."
-  echo "source ${base_env_prefix}/etc/profile.d/conda.sh"
-  source "${base_env_prefix}/etc/profile.d/conda.sh"
-  if ! command -v conda &> /dev/null; then
-    echo "ERROR: Failed to setup setup Conda"
-    exit 1
-  fi
+  echo "ERROR: Conda is not setup."
+  exit 1
 fi
 echo "  Conda is initialized"
 
