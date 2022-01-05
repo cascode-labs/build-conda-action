@@ -15,11 +15,8 @@ echo "build_options: ${build_options}"
 echo "action_path: ${action_path}"
 echo "repository_name: ${repository_name}"
 
-echo '$CONDA=' "${CONDA}"
-
 echo "::set-output name=PACKAGE_PATH::$(echo "None")"
-echo "CHECKS"
-echo "------"
+
 echo "Checking for the Conda recipe"
 if [ -d "${recipe_path}" ]; then
   echo "Building the conda recipe at ${recipe_path}"
@@ -50,10 +47,12 @@ else
   BUILD_ENV_NAME="${conda_build_env_name}"
 fi
 echo "BUILD_ENV_NAME: ${BUILD_ENV_NAME}"
-echo "CONDA_BUILD_ENV_FILE: ${CONDA_BUILD_ENV_FILE} ="
+echo "CONDA_BUILD_ENV_FILE: ${CONDA_BUILD_ENV_FILE}"
+echo "Build env yml file contents:"
 cat "${CONDA_BUILD_ENV_FILE}"
 
 echo "source ${base_env_prefix}/etc/profile.d/conda.sh"
+# shellcheck disable=SC1091
 source "${base_env_prefix}/etc/profile.d/conda.sh"
 echo "Checking that Conda is Initialized"
 if ! command -v conda &> /dev/null; then
@@ -87,7 +86,7 @@ echo "setting build options"
 read -r -a BUILD_OPTIONS <<< "${build_options}"
 echo "finished setting build options"
 echo "BUILD_OPTIONS: " "${BUILD_OPTIONS[@]}"
-OUT=$(conda build --output "${BUILD_OPTIONS[@]}" ${recipe_path})
+OUT=$(conda build --output "${BUILD_OPTIONS[@]}" "${recipe_path}")
 echo "::set-output name=PACKAGE_PATH::$(echo $OUT)"
 echo ""
 echo "Package output path:"
