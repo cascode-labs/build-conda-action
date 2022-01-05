@@ -95,4 +95,6 @@ echo ""
 echo "conda build " "${BUILD_OPTIONS[@]}" "${recipe_path}"
 conda build "${BUILD_OPTIONS[@]}" "${recipe_path}"
 mkdir "${runner_temp}/package_outputs"
-cp -f "$OUT" "${runner_temp}/package_outputs"
+for pkg in $OUT; do
+  cp -f "$pkg" "${runner_temp}/package_outputs"
+done
