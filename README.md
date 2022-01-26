@@ -23,7 +23,7 @@
 </p>
 
 A Github Action for building a [Conda](https://docs.conda.io/en/latest/) 
-package strored in the project using 
+package stored in the project using 
 [conda-build](https://docs.conda.io/projects/conda-build/en/latest/index.html).
 It is meant to be simple to use with reasonable defaults that should work 
 without any inputs when your project Conda configuration is setup according to 
