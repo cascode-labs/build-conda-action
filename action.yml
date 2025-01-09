@@ -48,11 +48,11 @@ runs:
         ${{ github.event.repository.name }} \
         ${{ runner.temp }}
       shell: bash -l {0}
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.package_artifact_name }}
         path: ${{runner.temp}}/package_outputs
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.test_results_artifact_name }}
         path: ${{ github.workspace }}/test_results
