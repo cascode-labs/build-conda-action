@@ -15,7 +15,7 @@ echo "build_options: ${build_options}"
 echo "action_path: ${action_path}"
 echo "repository_name: ${repository_name}"
 
-echo "::set-output name=PACKAGE_PATH::$(echo "None")"
+echo "PACKAGE_PATH=None" >> "${GITHUB_OUTPUT}"
 
 echo "Checking for the Conda recipe"
 if [ -d "${recipe_path}" ]; then
@@ -87,7 +87,7 @@ read -r -a BUILD_OPTIONS <<< "${build_options}"
 echo "finished setting build options"
 echo "BUILD_OPTIONS: " "${BUILD_OPTIONS[@]}"
 OUT=$(conda build --output "${BUILD_OPTIONS[@]}" "${recipe_path}")
-echo "::set-output name=PACKAGE_PATH::$(echo $OUT)"
+echo "PACKAGE_PATH=$OUT" >> "${GITHUB_OUTPUT}"
 echo ""
 echo "Package output path:"
 echo "  $OUT"

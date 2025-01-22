@@ -54,7 +54,7 @@ self-hosted runners by setting the "base_env_prefix" input.
 job-name:
   runs-on: 'ubuntu-latest'
   steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     # Builds the package using the standard configuration
     - uses: cascode-labs/build-conda-action/action.yml@v0
 ```
@@ -105,7 +105,7 @@ The following are uploaded to the run as artifacts.
 job-name:
   runs-on: 'ubuntu-latest'
   steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     # Initializes Conda on a GitHub hosted Runner
     - uses: conda-incubator/setup-miniconda@v2
       with:
